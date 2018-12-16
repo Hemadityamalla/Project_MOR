@@ -1,0 +1,134 @@
+  % --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{physics}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{float}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+ 
+\urlstyle{same}
+
+%Setup for adding MATLAB code
+\usepackage{listings}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{matlab}{
+    backgroundcolor=\color{backgroundColour},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=MATLAB
+} 
+%Packages to add Pseudocode algorithms
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+%Custom stuff used to add comments
+\newcommand{\TODO}[1]{{\color{red} TODO: #1}}
+\newcommand{\XZ}[1]{{\color{blue} XZ: #1}}
+\newcommand{\HM}[1]{{\color{green} HM: #1}}
+
+\newcommand{\delx}{\Delta x}
+\newcommand{\delt}{\Delta t}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bfn}{\mathbf{f}}
+
+
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+\title{%
+  Model Order Reduction Project \\
+  \large Heat Diffusion} 
+ 
+ \author{ %replace with your name
+Xinyu Zeng, 123445 \\
+Hemaditya Malla, 1282484
+}
+ 
+\maketitle
+\tableofcontents
+\pagebreak
+
+\section*{Problem 1}
+\addcontentsline{toc}{section}{\protect\numberline{}Problem 3}
+
+\section*{Problem 2}
+\addcontentsline{toc}{section}{\protect\numberline{}Problem 4}
+%\begin{figure}[H]
+%\begin{subfigure}{0.48\textwidth}
+%\includegraphics[width=\linewidth]{22_21_ukappa_contour.eps}
+%\end{subfigure}\hspace*{\fill}
+%\begin{subfigure}{0.48\textwidth}
+%\includegraphics[width=\linewidth]{22_21_ukappa_3d.eps}
+%\end{subfigure}
+%
+%\medskip
+%\begin{subfigure}{0.48\textwidth}
+%\includegraphics[width=\linewidth]{42_41_ukappa_contour.eps}
+%\end{subfigure}\hspace*{\fill}
+%\begin{subfigure}{0.48\textwidth}
+%\includegraphics[width=\linewidth]{42_41_ukappa_3d.eps}
+%\end{subfigure}
+%
+%\medskip
+%\begin{subfigure}{0.48\textwidth}
+%\includegraphics[width=\linewidth]{82_81_ukappa_contour.eps}
+%\end{subfigure}\hspace*{\fill}
+%\begin{subfigure}{0.48\textwidth}
+%\includegraphics[width=\linewidth]{82_81_ukappa_3d.eps}
+%\end{subfigure}
+%
+%\caption{Comparison of the numerical (left) and exact (right) solutions for the 2D convection equation using the \textbf{unlimited $\kappa=1/3$ discretization in space}. The contours shown are for values of $c = 10^{-6} + n, \ n=0,\ldots, 9$.}
+%\end{figure}
+
+\section*{Problem 3}
+\addcontentsline{toc}{section}{\protect\numberline{}Problem 10}
+
+\section*{Problem 4}
+\addcontentsline{toc}{section}{\protect\numberline{}Problem 11}
+\bibliography{references} 
+\bibliographystyle{ieeetr}
+\pagebreak
+\appendix
+\end{document}
