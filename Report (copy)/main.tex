@@ -84,7 +84,7 @@
   \large Heat Diffusion} 
  
  \author{ %replace with your name
-Xinyu Zeng, 1301462 \\
+Xinyu Zeng, 123445 \\
 Hemaditya Malla, 1282484
 }
  
@@ -94,72 +94,6 @@ Hemaditya Malla, 1282484
 
 \section*{Problem 1}
 \addcontentsline{toc}{section}{\protect\numberline{}Problem 1}
-
-This system is non-linear and time-invariant.\\
-According to description, this model is isotropic.\\ Therefor,
-\begin{equation}
-\rho (x,y)c(x,y)\frac {\partial T} {\partial t}(x,y,t)=
-\begin{bmatrix}
-\frac {\partial} {\partial x} & \frac {\partial} {\partial y}
-\end{bmatrix}
-\begin{bmatrix}
-\kappa(x,y) & 0\\
-0 & \kappa(x,y) 
-\end{bmatrix}
-\begin{bmatrix}
-\frac {\partial T} {\partial x}(x,y,t)\\
-\frac {\partial T} {\partial y}(x,y,t)
-\end{bmatrix}
-+u(x,y,t)
-\end{equation}\\
-i.e.
-\begin{equation}
-\rho (x,y)c(x,y)\frac {\partial T} {\partial t}(x,y,t)=
-(\frac {\partial \kappa} {\partial x}(x,y) \frac {\partial T} {\partial x}(x,y,t)+\frac {\partial \kappa} {\partial y}(x,y) \frac {\partial T} {\partial y}(x,y,t))+u(x,y,t)
-\end{equation}
-
-\subsection*{non-homogeneous} 
-\subsubsection*{Non-linear}
-Firstly, just consider the left side of the equation(2),
-\begin{equation}
-\rho(x_1+x_2,y_1+y_2) c(x_1+x_2,y_1+y_2) \frac {\partial T} {\partial t}(x_1+x_2,y_1+y_2,t)
-\end{equation}\\
-Since it's unknown whether $\rho$ and c is linear(because the part of T is only associated with t, this part could be ignored), even though they are both linear,like equation (5), it is still non-linear.
-
-\begin{equation}
-\small{\rho(x_1+x_2,y_1+y_2) c(x_1+x_2,y_1+y_2) =(\rho(x_1,y_1)+\rho(x_2,y_2)) (c(x_1,y_1)+c(x_2,y_2))}
-\end{equation}
-
-\begin{equation}
-\scriptsize{\rho(x_1,y_1)c(x_1,y_1)+\rho(x_1,y_1)c(x_2,y_2)+\rho(x_2,y_2)c(x_1,y_1)+\rho(x_2,y_2))c(x_2,y_2) \neq (\rho(x_1,y_1)c(x_1,y_1)+\rho(x_2,y_2))c(x_2,y_2))}
-\end{equation}
-
-\subsubsection*{time-invariant}
-input delayed: $u_d(t)=u(t+\delta)$\\
-\begin{equation}
-\rho (x,y)c(x,y)\frac {\partial T} {\partial t}(x,y,t)-(\frac {\partial \kappa} {\partial x}(x,y) \frac {\partial T} {\partial x}(x,y,t)+\frac {\partial \kappa} {\partial y}(x,y) \frac {\partial T} {\partial y}(x,y,t))=u(x,y,t+\delta)
-\end{equation}\\
-output delayed:$T_d(t)=T(t+\delta)$\\
-\begin{equation}
-\rho (x,y)c(x,y)\frac {\partial T} {\partial t}(x,y,t+\delta)-(\frac {\partial \kappa} {\partial x}(x,y) \frac {\partial T} {\partial x}(x,y,t+\delta)+\frac {\partial \kappa} {\partial y}(x,y) \frac {\partial T} {\partial y}(x,y,t+\delta))=u(x,y,t+\delta)
-\end{equation}\\
-The right side of equation(6)and (7) is equal, so it is time-invariant.
-
-\subsection*{homogeneous}
-\subsubsection*{Non-linear}
-When $\rho$ and c is constant, consider the right side of equation(2),\\
-\begin{equation}
-\frac {\partial \kappa} {\partial x}(x_1+x_2,y_1+y_2) \frac {\partial T} {\partial x}(x_1+x_2,y_1+y_2,t)+\frac {\partial \kappa} {\partial y}(x_1+x_2,y_1+y_2) \frac {\partial T} {\partial y}(x_1+x_2,y_1+y_2,t)+u(x_1+x_2,y_1+y_2,t)
-\end{equation}\\
-
-since $\kappa$ is coupled with T, the first item\\
-\begin{equation}
-\frac {\partial \kappa} {\partial x}(x_1+x_2) \frac {\partial T} {\partial x}(x_1+x_2) \neq \frac {\partial \kappa} {\partial x}(x_1)\frac {\partial T} {\partial x}(x_1)+\frac {\partial \kappa} {\partial x}(x_2)\frac {\partial T} {\partial x}(x_2)
-\end{equation}
-
-\subsubsection*{time-invariant}
-Because only u and T is associated with time that no matter the system is homogeneous or not, it is time-invariant. (Proof as equation(6) and (7))
-
 
 \section*{Problem 2}
 \addcontentsline{toc}{section}{\protect\numberline{}Problem 2}
