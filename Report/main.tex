@@ -67,6 +67,8 @@
 \newcommand{\bu}{\mathbf{u}}
 \newcommand{\bA}{\mathbf{A}}
 \newcommand{\bfn}{\mathbf{f}}
+\newcommand{\parder}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\der}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
 
 
  
@@ -91,10 +93,64 @@ Hemaditya Malla, 1282484
 \pagebreak
 
 \section*{Problem 1}
-\addcontentsline{toc}{section}{\protect\numberline{}Problem 3}
+\addcontentsline{toc}{section}{\protect\numberline{}Problem 1}
 
 \section*{Problem 2}
-\addcontentsline{toc}{section}{\protect\numberline{}Problem 4}
+\addcontentsline{toc}{section}{\protect\numberline{}Problem 2}
+Homogeneous model assumption implies the following:
+\begin{itemize}
+	\item $l_x = l_y = 0$.
+	\item $\rho(x,y) = \rho$ $\kappa(x,y) = \kappa$ and $c(x,y) = c$, where $\rho, c, \kappa$ are positive constants.
+\end{itemize}
+Applying the above assumptions to the model gives
+\begin{equation}
+\rho c \parder{T}{t} = \kappa \bigg(\parder{^2 T}{x^2} + \parder{^2 T}{y^2}\bigg) + u(x,y,t),
+\label{eqn:prob2_model}
+\end{equation}
+as the final equation. \\
+Let the source term be zero, i.e., $u(x,y,t) = 0$. Consider the function 
+\begin{equation}
+T(x,y,t) = a(t)\psi(x)\phi(y),
+\label{eqn:prob2_soln}
+\end{equation}
+where $a(t)$, $\psi(x)$ and $\phi(y)$ are real-valued functions on $\mathbb{R}$, $[0,L_x]$ and $[0,L_y]$ respectively. \\
+Substituting \eqref{eqn:prob2_soln} into \eqref{eqn:prob2_model},
+\begin{equation}
+\rho c \parder{\big(a(t)\psi(x)\phi(y)\big)}{t} = \kappa \bigg(\parder{^2 \big(a(t)\psi(x)\phi(y)\big)}{x^2} + \parder{^2 \big(a(t)\psi(x)\phi(y)\big)}{y^2}\bigg).
+\end{equation}
+This gives,   
+\begin{equation}
+\rho c \psi(x) \phi(y) \der{a(t)}{t} = \kappa a(t)\bigg(\phi(y)\der{^2 \psi(x)}{x^2} + \psi(x)\der{^2 \phi(y)}{y^2}\bigg).
+\end{equation}
+Dividing throughout by \eqref{eqn:prob2_soln}, 
+\begin{equation}
+\frac{\rho c}{a(t)} \der{a(t)}{t} = \kappa \bigg(\frac{1}{\psi(x)}\der{^2 \psi(x)}{x^2} + \frac{1}{\phi(y)}\der{^2 \phi(y)}{y^2}\bigg).
+\end{equation}
+Rearranging, gives,
+\begin{equation}
+\frac{\rho c}{a(t)} \der{a(t)}{t} - \kappa \bigg(\frac{1}{\psi(x)}\der{^2 \psi(x)}{x^2} + \frac{1}{\phi(y)}\der{^2 \phi(y)}{y^2}\bigg) = 0.
+\end{equation}
+The three terms in the above equation are functions of the three independent variables $x, y, t$. So, in order for the above equation to be satisfied, each of the term must be constant. Consider a constant $\alpha > 0$. The three terms are then given as
+\begin{equation}
+\frac{\rho c}{a(t)} \der{a(t)}{t} = \alpha, \qquad \frac{1}{\psi(x)}\der{^2 \psi(x)}{x^2} =   \frac{1}{\phi(y)}\der{^2 \phi(y)}{y^2} = \frac{\alpha}{2 \kappa}.
+\end{equation}
+Upon simplifying, the following differential equations are obtained: 
+\begin{subequations}
+\begin{equation}
+\der{a(t)}{t} - \lambda a(t) = 0,
+\label{eqn:prob2_sub1}
+\end{equation}
+\begin{equation}
+\der{^2 \psi(x)}{x^2} - \lambda_x \psi(x) = 0,
+\label{eqn:prob2_sub2}
+\end{equation}
+\begin{equation}
+\der{^2 \phi(y)}{y^2} - \lambda_y \phi(y) = 0,
+\label{eqn:prob2_sub3}
+\end{equation}
+where $\lambda = \frac{\alpha}{\rho c}$, $\lambda_x  = \lambda_y = \frac{\alpha}{2 \kappa}$. \\
+\end{subequations}
+Thus it can be seen that for equation\eqref{eqn:prob2_soln} to be a solution to the PDE \eqref{eqn:prob2_model} when $u(x,y,t) = 0$, $a(t)$, $\psi(x)$ and $\phi(y)$ need to satisfy the equations \eqref{eqn:prob2_sub1}, \eqref{eqn:prob2_sub2} and \eqref{eqn:prob2_sub3} respectively.
 %\begin{figure}[H]
 %\begin{subfigure}{0.48\textwidth}
 %\includegraphics[width=\linewidth]{22_21_ukappa_contour.eps}
@@ -123,10 +179,10 @@ Hemaditya Malla, 1282484
 %\end{figure}
 
 \section*{Problem 3}
-\addcontentsline{toc}{section}{\protect\numberline{}Problem 10}
+\addcontentsline{toc}{section}{\protect\numberline{}Problem 3}
 
 \section*{Problem 4}
-\addcontentsline{toc}{section}{\protect\numberline{}Problem 11}
+\addcontentsline{toc}{section}{\protect\numberline{}Problem 4}
 \bibliography{references} 
 \bibliographystyle{ieeetr}
 \pagebreak
