@@ -120,7 +120,7 @@ i.e.,
 \end{equation}
 \textbf{Remark:} Here onwards(\HM{Is that correct grammar?}), it is implicitly implied that $T = T(x,y,t)$ unless specified otherwise and $(x,y,t)$ is dropped for notational convenience.
 \subsection*{Non-homogeneous} 
-\subsubsection*{Nonlinearity}
+\subsubsection*{Linearity}
 In order to check for the linearity of \eqref{eqn:simplified_prob1} the following solution is assumed:
 \begin{equation}
 T(x,y,t) = T_1(x,y,t) + T_2(x,y,t),
@@ -129,46 +129,37 @@ T(x,y,t) = T_1(x,y,t) + T_2(x,y,t),
 where $T_1(x,y,t) \ \& \ T_2(x,y,t)$ are solutions of the PDE \eqref{eqn:simplified_prob1}.
 Substituting the solution \eqref{eqn:prob1_soln} into the left hand side of the PDE \eqref{eqn:simplified_prob1}, we get,
 \begin{equation}
-\rho(x,y)c(x,y) \parder{T_1 + T_2}{t} (x,y,t) = \rho
+\rho(x,y)c(x,y) \parder{T_1 + T_2}{t} (x,y,t) =\rho(x,y)c(x,y)\bigg( \parder{T_1}{t} (x,y,t)+\parder{T_2}{t} (x,y,t)\bigg)
+\label{equ:prob1_1splidL}
 \end{equation}
-%\begin{equation}
-%\rho(x_1+x_2,y_1+y_2) c(x_1+x_2,y_1+y_2) \frac {\partial T} {\partial t}(x_1+x_2,y_1+y_2,t)
-%\end{equation}\\
-%Since it's unknown whether $\rho$ and c is linear(because the part of T is only associated with t, this part could be ignored), even though they are both linear,like equation (5), it is still non-linear.
-%
-%\begin{equation}
-%\small{\rho(x_1+x_2,y_1+y_2) c(x_1+x_2,y_1+y_2) =(\rho(x_1,y_1)+\rho(x_2,y_2)) (c(x_1,y_1)+c(x_2,y_2))}
-%\end{equation}
-%
-%\begin{equation}
-%\scriptsize{\rho(x_1,y_1)c(x_1,y_1)+\rho(x_1,y_1)c(x_2,y_2)+\rho(x_2,y_2)c(x_1,y_1)+\rho(x_2,y_2))c(x_2,y_2) \neq (\rho(x_1,y_1)c(x_1,y_1)+\rho(x_2,y_2))c(x_2,y_2))}
-%\end{equation}
+Substituting the solution \eqref{eqn:prob1_soln} into the right side of the PDE \eqref{eqn:simplified_prob1},
+\begin{multline}
+\parder{ }{x}\left(\kappa(x,y)\parder{T_1 + T_2}{x} (x,y,t)\right) + \parder{ }{y}\bigg(\kappa(x,y)\parder{T_1 + T_2}{y} (x,y,t)\bigg)+u(x,y,t)=\\ 
+\bigg(\parder{\kappa(x,y)}{x} \Big( \parder{T_1}{x} (x,y,t)+\parder{T_2}{x} (x,y,t)\Big)+ \kappa (\parder{^2  T_1}{x^2}(x,y,t)+\parder{^2}{x^2} T_2(x,y,t))\bigg)+\\ \bigg(\parder{\kappa(x,y)}{y}( \parder{T_1}{y} (x,y,t)+\parder{T_2}{y} (x,y,t))+ \kappa (\parder{^2}{y^2} T_1(x,y,t)+\parder{^2}{y^2} T_2(x,y,t))\bigg)+\\ u(x,y,t)
+\label{equ:prob1_11splidR}
+\end{multline}
+
+According to equation \eqref{equ:prob1_1splidL} and \eqref{equ:prob1_11splidR}, both sides are linear. Therefore this equation is linear.
 
 \subsubsection*{Time-invariant}
 input delayed: $u_d(t)=u(t+\delta)$\\
 \begin{equation}
 \rho (x,y)c(x,y)\frac {\partial T} {\partial t}(x,y,t)-(\frac {\partial \kappa} {\partial x}(x,y) \frac {\partial T} {\partial x}(x,y,t)+\frac {\partial \kappa} {\partial y}(x,y) \frac {\partial T} {\partial y}(x,y,t))=u(x,y,t+\delta)
+\label{equ:prob1_12inpD}
 \end{equation}\\
 output delayed:$T_d(t)=T(t+\delta)$\\
 \begin{equation}
 \rho (x,y)c(x,y)\frac {\partial T} {\partial t}(x,y,t+\delta)-(\frac {\partial \kappa} {\partial x}(x,y) \frac {\partial T} {\partial x}(x,y,t+\delta)+\frac {\partial \kappa} {\partial y}(x,y) \frac {\partial T} {\partial y}(x,y,t+\delta))=u(x,y,t+\delta)
+\label{equ:prob1_12outpD}
 \end{equation}\\
-The right side of equation(6)and (7) is equal, so it is time-invariant.
+The right side of equation\eqref{equ:prob1_12inpD} and \eqref{equ:prob1_12outpD} is equal, so it is time-invariant.
 
-\subsection*{homogeneous}
-\subsubsection*{Non-linear}
-When $\rho$ and c is constant, consider the right side of equation(2),\\
-\begin{equation}
-\frac {\partial \kappa} {\partial x}(x_1+x_2,y_1+y_2) \frac {\partial T} {\partial x}(x_1+x_2,y_1+y_2,t)+\frac {\partial \kappa} {\partial y}(x_1+x_2,y_1+y_2) \frac {\partial T} {\partial y}(x_1+x_2,y_1+y_2,t)+u(x_1+x_2,y_1+y_2,t)
-\end{equation}\\
-
-since $\kappa$ is coupled with T, the first item\\
-\begin{equation}
-\frac {\partial \kappa} {\partial x}(x_1+x_2) \frac {\partial T} {\partial x}(x_1+x_2) \neq \frac {\partial \kappa} {\partial x}(x_1)\frac {\partial T} {\partial x}(x_1)+\frac {\partial \kappa} {\partial x}(x_2)\frac {\partial T} {\partial x}(x_2)
-\end{equation}
+\subsection*{Homogeneous}
+\subsubsection*{Linear}
+When $\rho$ and c is constant, it is not associated with substituting the solution \eqref{eqn:prob1_soln} into the both sides of the PDE \eqref{eqn:simplified_prob1}. So this system is still linear.
 
 \subsubsection*{time-invariant}
-Because only u and T is associated with time that no matter the system is homogeneous or not, it is time-invariant. (Proof as equation(6) and (7))
+Because only u and T is associated with time that no matter the system is homogeneous or not, it is time-invariant. (Proof as equation \eqref{equ:prob1_12inpD} and \eqref{equ:prob1_12outpD})
 
 
 \section*{Problem 2}
