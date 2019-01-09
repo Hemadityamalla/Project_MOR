@@ -69,6 +69,10 @@
 %Use these commands instead of having to type out all of the derivative symbols in a fraction
 \newcommand{\parder}[2]{\frac{\partial #1}{\partial #2}} 
 \newcommand{\der}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
+%Use these commands while using norms and innerproducts
+\let\norm\undefined %This line removes the definition of norm in the amsmath package since I have my own definition below
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\dotprod}[2]{\left\langle #1, #2 \right\rangle}
 
 
  
@@ -91,7 +95,18 @@ Hemaditya Malla, 1282484
 \maketitle
 \tableofcontents
 \pagebreak
-\TODO{Shall we give a small introduction to the problem where we write down the equations, boundary conditions and also add the figure?}
+\section*{Introduction}
+\TODO{Write the intro later- define the physical parameters, domain}
+
+\begin{equation}
+ \begin{cases}
+    \rho(x,y)c(x,y)\parder{T}{t}(x,y,t) = \begin{bmatrix}\parder{ }{x} & \parder{ }{y}\end{bmatrix}K(x,y)\begin{bmatrix}\parder{T(x,y,t)}{x} \\ \parder{T(x,y,t)}{y}\end{bmatrix} + u(x,y,t) \quad (0, T] \times \Omega, \\
+    \parder{T(0,y,t)}{x} = \parder{L_x,y,t}{x} = 0, \quad y\in[0,L_y] \times [0,T],   \\
+    \parder{T(x,0,t)}{y} = \parder{x,L_y,t}{y} = 0, \quad x\in[0,L_x] \times [0,T],   \\
+    T(x,y,0) = T_0(x,y), \quad \{t = 0\} \times \Omega,
+\end{cases}
+\end{equation}
+where $\Omega := [0,L_x] \times [0,L_y]$ and $T_0(x,y)$ is a physically realistic initial temperature profile.
 \section*{Problem 1}
 \addcontentsline{toc}{section}{\protect\numberline{}Problem 1}
 
@@ -256,12 +271,44 @@ Thus it can be seen that for equation\eqref{eqn:prob2_soln} to be a solution to 
 
 \section*{Problem 3}
 \addcontentsline{toc}{section}{\protect\numberline{}Problem 3}
-The set of square-integrable functions is given as:
+The space of square-integrable functions in $\Omega$ is defined as 
 \begin{equation}
-L_2 = \{f \ : \ \int_\Omega f \mathrm{dx} < \infty\}
+L_2(\Omega) = \left\{ f(x,y):\Omega\rightarrow\mathbb{R} \ \bigg| \ \int_0^{L_y}\int_0^{L_x} f(x,y)^2 \mathrm{d}x\mathrm{d}y < \infty \right\}
+\label{eqn:l2space}
+\end{equation}
+The inner product for $L_2(\Omega)$ is defined as follows:
+\begin{equation}
+\dotprod{f}{g} := \int_0^{L_y}\int_0^{L_x} f(x,y)g(x,y) \mathrm{d}x\mathrm{d}y, \qquad f,g \in L_2(\Omega).
+\label{eqn:l2_innerprod}
+\end{equation}
+The norm associated with $L_2(\Omega)$ is defined as follows:
+\begin{equation}
+\norm{f}_{L_2} = \dotprod{f}{f}^{\frac{1}{2}}, \qquad f \in L_2(\Omega).
+\label{eqn:l2_norm}
 \end{equation}
 \section*{Problem 4}
 \addcontentsline{toc}{section}{\protect\numberline{}Problem 4}
+The spectral expansion of $T(x,y,t)$ is given as
+\begin{equation}
+T(x,y,t) = \sum_{k=0}^\infty\sum_{l=0}^\infty a_{kl}(t)\psi_k(x)\phi_l(y).
+\end{equation}
+Taking $u(x,y,t) = 0$ and substituting the above solution in equation \eqref{eqn:prob2_model}, the following is obtained:
+\begin{equation}
+\rho c\ parder{ }{t} \left(\sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t)\psi_k(x)\phi_l(y)\right) = \kappa \left(\parder{^2}{x^2} + \parder{^2}{y^2}\right)\sum_{k=0}^\infty\sum_{l=0}^\infty a_{kl}(t)\psi_k(x)\phi_l(y).
+\end{equation}
+The partial derivatives can be written as regular(\HM{?}) derivatives as they are now operating on functions of a single variable.
+\begin{equation}
+\Rightarrow \rho c \sum_{k=0}^\infty\sum_{l=0}^\infty \der{^2 a_{k,l}(t)}{t} \psi_k(x)\phi_l(y) = \kappa \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\der{^2 \psi_{k}(x)}{x^2}\phi_l(y) + \psi_k(x)\der{^2\phi_l(y)}{y^2}\right)
+\end{equation}
+\textbf{Remark:} It has been made clear that $\psi = \psi(x)$ and $\phi = \phi(y)$, so $(x) \& (y)$ are dropped henceforth.\\
+The function $\psi_i(x)\phi_j(y)$ is multiplied throughout and the equation is integrated over the whole domain $\Omega$ as follows:
+\begin{multline}
+\rho c \int_{0}^{L_y}\int_0^{L_x}\sum_{k=0}^\infty\sum_{l=0}^\infty \der{^2 a_{k,l}(t)}{t} \psi_k(x)\phi_l(y) \psi_i(x)\phi_j(y) = \\ \kappa \int_{0}^{L_y}\int_0^{L_x} \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\der{^2 \psi_{k}(x)}{x^2}\phi_l(y)\psi_i(x)\phi_j(y) + \psi_k(x)\der{^2\phi_l(y)}{y^2}\psi_i(x)\phi_j(y)\right).
+\end{multline}
+Re-writing the above equation using the inner product notation \eqref{eqn:l2_innerprod}, we get, 
+\begin{multline}
+\rho c \sum_{k=0}^\infty\sum_{l=0}^\infty \der{^2 a_{k,l}(t)}{t} \dotprod{\psi_k(x)\phi_l(y)}{\psi_i(x)\phi_j(y)} = \\ \kappa \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\dotprod{\der{^2 \psi_{k}(x)}{x^2}\phi_l(y)}{\psi_i(x)\phi_j(y)} + \dotprod{\psi_k(x)\der{^2\phi_l(y)}{y^2}}{\psi_i(x)\phi_j(y)}\right).
+\end{multline}
 \bibliography{references} 
 \bibliographystyle{ieeetr}
 \pagebreak
