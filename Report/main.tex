@@ -289,17 +289,39 @@ Taking $u(x,y,t) = 0$ and substituting the above solution in equation \eqref{eqn
 \end{equation}
 The partial derivatives can be written as regular(\HM{?}) derivatives as they are now operating on functions of a single variable.
 \begin{equation}
-\Rightarrow \rho c \sum_{k=0}^\infty\sum_{l=0}^\infty \der{^2 a_{k,l}(t)}{t} \psi_k(x)\phi_l(y) = \kappa \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\der{^2 \psi_{k}(x)}{x^2}\phi_l(y) + \psi_k(x)\der{^2\phi_l(y)}{y^2}\right)
+\Rightarrow \rho c \sum_{k=0}^\infty\sum_{l=0}^\infty \der{a_{k,l}(t)}{t} \psi_k(x)\phi_l(y) = \kappa \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\der{^2 \psi_{k}(x)}{x^2}\phi_l(y) + \psi_k(x)\der{^2\phi_l(y)}{y^2}\right)
 \end{equation}
 \textbf{Remark:} It has been made clear that $\psi = \psi(x)$ and $\phi = \phi(y)$, so $(x) \& (y)$ are dropped henceforth.\\
-The function $\psi_i(x)\phi_j(y)$ is multiplied throughout and the equation is integrated over the whole domain $\Omega$ as follows:
+The function $\psi_i(x)\phi_j(y)$ (where $i,j$ can be any of $\{0,1,\ldots,\infty\}$) is multiplied throughout and the equation is integrated over the whole domain $\Omega$ as follows:
 \begin{multline}
-\rho c \int_{0}^{L_y}\int_0^{L_x}\sum_{k=0}^\infty\sum_{l=0}^\infty \der{^2 a_{k,l}(t)}{t} \psi_k(x)\phi_l(y) \psi_i(x)\phi_j(y) = \\ \kappa \int_{0}^{L_y}\int_0^{L_x} \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\der{^2 \psi_{k}(x)}{x^2}\phi_l(y)\psi_i(x)\phi_j(y) + \psi_k(x)\der{^2\phi_l(y)}{y^2}\psi_i(x)\phi_j(y)\right).
+\rho c \int_{0}^{L_y}\int_0^{L_x}\sum_{k=0}^\infty\sum_{l=0}^\infty \der{a_{k,l}(t)}{t} \psi_k(x)\phi_l(y) \psi_i(x)\phi_j(y) = \\ \kappa \int_{0}^{L_y}\int_0^{L_x} \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\der{^2 \psi_{k}(x)}{x^2}\phi_l(y)\psi_i(x)\phi_j(y) + \psi_k(x)\der{^2\phi_l(y)}{y^2}\psi_i(x)\phi_j(y)\right).
 \end{multline}
 Re-writing the above equation using the inner product notation \eqref{eqn:l2_innerprod}, we get, 
 \begin{multline}
-\rho c \sum_{k=0}^\infty\sum_{l=0}^\infty \der{^2 a_{k,l}(t)}{t} \dotprod{\psi_k(x)\phi_l(y)}{\psi_i(x)\phi_j(y)} = \\ \kappa \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\dotprod{\der{^2 \psi_{k}(x)}{x^2}\phi_l(y)}{\psi_i(x)\phi_j(y)} + \dotprod{\psi_k(x)\der{^2\phi_l(y)}{y^2}}{\psi_i(x)\phi_j(y)}\right).
+\rho c \sum_{k=0}^\infty\sum_{l=0}^\infty \der{a_{k,l}(t)}{t} \dotprod{\psi_k(x)\phi_l(y)}{\psi_i(x)\phi_j(y)} = \\ \kappa \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\dotprod{\der{^2 \psi_{k}(x)}{x^2}\phi_l(y)}{\psi_i(x)\phi_j(y)} + \dotprod{\psi_k(x)\der{^2\phi_l(y)}{y^2}}{\psi_i(x)\phi_j(y)}\right).
+\label{eqn:galerkin_deriv3}
 \end{multline}
+Since $\phi_k(x)$ and $\psi_l(y)$ are trigonometric functions, their derivatives w.r.t.\ $x$ and $y$ respectively give:
+\begin{equation}
+\der{^2 \psi_k(x)}{x^2} = -\left(\frac{k\pi}{L_x}\right)^2 \psi_k(x), \qquad \der{^2 \phi_l(y)}{y^2} = -\left(\frac{l\pi}{L_y}\right)^2.
+\end{equation}
+Using the above results in \eqref{eqn:galerkin_deriv3}, the following is obtained:
+\begin{multline}
+\rho c \sum_{k=0}^\infty\sum_{l=0}^\infty \der{a_{k,l}(t)}{t} \dotprod{\psi_k(x)\phi_l(y)}{\psi_i(x)\phi_j(y)} = \\ -\kappa \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\left(\frac{k\pi}{L_x}\right)^2\dotprod{\psi_k(x)\phi_l(y)}{\psi_i(x)\phi_j(y)} + \left(\frac{l\pi}{L_y}\right)^2\dotprod{\psi_k(x)\phi_l(y)}{\psi_i(x)\phi_j(y)}\right).
+\label{eqn:galerkin_deriv4}
+\end{multline}
+Using the orthonormality result \HM{Give ref here} from the previous problem, the following is obtained:
+\begin{equation}
+\rho c \sum_{k=0}^\infty\sum_{l=0}^\infty \der{a_{k,l}(t)}{t} \delta_{ki}\delta_{lj} = \\ -\kappa \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left[\left(\frac{k\pi}{L_x}\right)^2\delta_{ki}\delta_{lj} + \left(\frac{l\pi}{L_y}\right)^2\delta_{ki}\delta_{lj}\right].
+\label{eqn:galerkin_deriv5}
+\end{equation}
+Setting $k = i$ and $l = j$ in the equation \eqref{eqn:galerkin_deriv5} and neglecting the zero terms, we get,
+\begin{equation}
+\rho c \der{a_{k,l}(t)}{t}  = -\kappa a_{k,l}(t)\left[\left(\frac{k\pi}{L_x}\right)^2 + \left(\frac{l\pi}{L_y}\right)^2\right], \qquad k,l = 0,1,\ldots,\infty.
+\label{eqn:galerkin_deriv6}
+\end{equation}
+It can be observed that the above set of equations are infinite, so the values of $k,l$ are restricted to finite values. \\
+Let $k = 0,1,\ldots,K$ and $l = 0,1,\ldots,L$. Then a set of $KL$ equations are obtained that have the form \eqref{eqn:galerkin_deriv6}.
 \bibliography{references} 
 \bibliographystyle{ieeetr}
 \pagebreak
