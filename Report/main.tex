@@ -1,6 +1,5 @@
   % --------------------------------------------------------------
 % This is all preamble stuff that you don't have to worry about.
-% Head down to where it says "Start here"
 % --------------------------------------------------------------
  
 \documentclass[12pt]{article}
@@ -67,7 +66,8 @@
 \newcommand{\bu}{\mathbf{u}}
 \newcommand{\bA}{\mathbf{A}}
 \newcommand{\bfn}{\mathbf{f}}
-\newcommand{\parder}[2]{\frac{\partial #1}{\partial #2}}
+%Use these commands instead of having to type out all of the derivative symbols in a fraction
+\newcommand{\parder}[2]{\frac{\partial #1}{\partial #2}} 
 \newcommand{\der}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
 
 
@@ -91,48 +91,58 @@ Hemaditya Malla, 1282484
 \maketitle
 \tableofcontents
 \pagebreak
-
+\TODO{Shall we give a small introduction to the problem where we write down the equations, boundary conditions and also add the figure?}
 \section*{Problem 1}
 \addcontentsline{toc}{section}{\protect\numberline{}Problem 1}
 
 This system is non-linear and time-invariant.\\
-According to description, this model is isotropic.\\ Therefor,
+According to description, this model is isotropic.\\ Therefore,
 \begin{equation}
-\rho (x,y)c(x,y)\frac {\partial T} {\partial t}(x,y,t)=
+\rho (x,y)c(x,y)\parder{T}{t}(x,y,t)=
 \begin{bmatrix}
-\frac {\partial} {\partial x} & \frac {\partial} {\partial y}
+\parder{ }{x} & \parder{ }{y}
 \end{bmatrix}
 \begin{bmatrix}
 \kappa(x,y) & 0\\
 0 & \kappa(x,y) 
 \end{bmatrix}
 \begin{bmatrix}
-\frac {\partial T} {\partial x}(x,y,t)\\
-\frac {\partial T} {\partial y}(x,y,t)
+\parder{T}{x}(x,y,t)\\
+\parder{T}{y}(x,y,t)
 \end{bmatrix}
-+u(x,y,t)
-\end{equation}\\
-i.e.
-\begin{equation}
-\rho (x,y)c(x,y)\frac {\partial T} {\partial t}(x,y,t)=
-(\frac {\partial \kappa} {\partial x}(x,y) \frac {\partial T} {\partial x}(x,y,t)+\frac {\partial \kappa} {\partial y}(x,y) \frac {\partial T} {\partial y}(x,y,t))+u(x,y,t)
++u(x,y,t),
+\label{eqn:main_prob1}
 \end{equation}
-
-\subsection*{non-homogeneous} 
-\subsubsection*{Non-linear}
-Firstly, just consider the left side of the equation(2),
+i.e.,
 \begin{equation}
-\rho(x_1+x_2,y_1+y_2) c(x_1+x_2,y_1+y_2) \frac {\partial T} {\partial t}(x_1+x_2,y_1+y_2,t)
-\end{equation}\\
-Since it's unknown whether $\rho$ and c is linear(because the part of T is only associated with t, this part could be ignored), even though they are both linear,like equation (5), it is still non-linear.
-
-\begin{equation}
-\small{\rho(x_1+x_2,y_1+y_2) c(x_1+x_2,y_1+y_2) =(\rho(x_1,y_1)+\rho(x_2,y_2)) (c(x_1,y_1)+c(x_2,y_2))}
+\rho (x,y)c(x,y)\parder{T}{t}(x,y,t)= \parder{ }{x}\bigg(\kappa(x,y)\parder{T}{x} (x,y,t)\bigg) + \parder{ }{y}\bigg(\kappa(x,y)\parder{T}{y} (x,y,t)\bigg)+u(x,y,t).
+\label{eqn:simplified_prob1}
 \end{equation}
-
+\textbf{Remark:} Here onwards(\HM{Is that correct grammar?}), it is implicitly implied that $T = T(x,y,t)$ unless specified otherwise and $(x,y,t)$ is dropped for notational convenience.
+\subsection*{Non-homogeneous} 
+\subsubsection*{Nonlinearity}
+In order to check for the linearity of \eqref{eqn:simplified_prob1} the following solution is assumed:
 \begin{equation}
-\scriptsize{\rho(x_1,y_1)c(x_1,y_1)+\rho(x_1,y_1)c(x_2,y_2)+\rho(x_2,y_2)c(x_1,y_1)+\rho(x_2,y_2))c(x_2,y_2) \neq (\rho(x_1,y_1)c(x_1,y_1)+\rho(x_2,y_2))c(x_2,y_2))}
+T(x,y,t) = T_1(x,y,t) + T_2(x,y,t),
+\label{eqn:prob1_soln}
 \end{equation}
+where $T_1(x,y,t) \ \& \ T_2(x,y,t)$ are solutions of the PDE \eqref{eqn:simplified_prob1}.
+Substituting the solution \eqref{eqn:prob1_soln} into the left hand side of the PDE \eqref{eqn:simplified_prob1}, we get,
+\begin{equation}
+\rho(x,y)c(x,y) \parder{T_1 + T_2}{t} (x,y,t) = \rho
+\end{equation}
+%\begin{equation}
+%\rho(x_1+x_2,y_1+y_2) c(x_1+x_2,y_1+y_2) \frac {\partial T} {\partial t}(x_1+x_2,y_1+y_2,t)
+%\end{equation}\\
+%Since it's unknown whether $\rho$ and c is linear(because the part of T is only associated with t, this part could be ignored), even though they are both linear,like equation (5), it is still non-linear.
+%
+%\begin{equation}
+%\small{\rho(x_1+x_2,y_1+y_2) c(x_1+x_2,y_1+y_2) =(\rho(x_1,y_1)+\rho(x_2,y_2)) (c(x_1,y_1)+c(x_2,y_2))}
+%\end{equation}
+%
+%\begin{equation}
+%\scriptsize{\rho(x_1,y_1)c(x_1,y_1)+\rho(x_1,y_1)c(x_2,y_2)+\rho(x_2,y_2)c(x_1,y_1)+\rho(x_2,y_2))c(x_2,y_2) \neq (\rho(x_1,y_1)c(x_1,y_1)+\rho(x_2,y_2))c(x_2,y_2))}
+%\end{equation}
 
 \subsubsection*{time-invariant}
 input delayed: $u_d(t)=u(t+\delta)$\\
