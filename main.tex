@@ -1,0 +1,260 @@
+  % --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{physics}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{float}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+ 
+\urlstyle{same}
+
+%Setup for adding MATLAB code
+\usepackage{listings}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{matlab}{
+    backgroundcolor=\color{backgroundColour},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=MATLAB
+} 
+%Packages to add Pseudocode algorithms
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+%Custom stuff used to add comments
+\newcommand{\TODO}[1]{{\color{red} TODO: #1}}
+\newcommand{\XZ}[1]{{\color{blue} XZ: #1}}
+\newcommand{\HM}[1]{{\color{green} HM: #1}}
+
+\newcommand{\delx}{\Delta x}
+\newcommand{\delt}{\Delta t}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bfn}{\mathbf{f}}
+%Use these commands instead of having to type out all of the derivative symbols in a fraction
+\newcommand{\parder}[2]{\frac{\partial #1}{\partial #2}} 
+\newcommand{\der}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
+
+
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+\title{%
+  Model Order Reduction Project \\
+  \large Heat Diffusion} 
+ 
+ \author{ %replace with your name
+Xinyu Zeng, 1301462 \\
+Hemaditya Malla, 1282484
+}
+ 
+\maketitle
+\tableofcontents
+\pagebreak
+\TODO{Shall we give a small introduction to the problem where we write down the equations, boundary conditions and also add the figure?}
+\section*{Problem 1}
+\addcontentsline{toc}{section}{\protect\numberline{}Problem 1}
+
+This system is non-linear and time-invariant.\\
+According to description, this model is isotropic.\\ Therefore,
+\begin{equation}
+\rho (x,y)c(x,y)\parder{T}{t}(x,y,t)=
+\begin{bmatrix}
+\parder{ }{x} & \parder{ }{y}
+\end{bmatrix}
+\begin{bmatrix}
+\kappa(x,y) & 0\\
+0 & \kappa(x,y) 
+\end{bmatrix}
+\begin{bmatrix}
+\parder{T}{x}(x,y,t)\\
+\parder{T}{y}(x,y,t)
+\end{bmatrix}
++u(x,y,t),
+\label{eqn:main_prob1}
+\end{equation}
+i.e.,
+\begin{equation}
+\rho (x,y)c(x,y)\parder{T}{t}(x,y,t)= \parder{ }{x}\bigg(\kappa(x,y)\parder{T}{x} (x,y,t)\bigg) + \parder{ }{y}\bigg(\kappa(x,y)\parder{T}{y} (x,y,t)\bigg)+u(x,y,t).
+\label{eqn:simplified_prob1}
+\end{equation}
+\textbf{Remark:} Here onwards(\HM{Is that correct grammar?}), it is implicitly implied that $T = T(x,y,t)$ unless specified otherwise and $(x,y,t)$ is dropped for notational convenience.
+\subsection*{Non-homogeneous} 
+\subsubsection*{Linearity}
+In order to check for the linearity of \eqref{eqn:simplified_prob1} the following solution is assumed:
+\begin{equation}
+T(x,y,t) = T_1(x,y,t) + T_2(x,y,t),
+\label{eqn:prob1_soln}
+\end{equation}
+where $T_1(x,y,t) \ \& \ T_2(x,y,t)$ are solutions of the PDE \eqref{eqn:simplified_prob1}.
+Substituting the solution \eqref{eqn:prob1_soln} into the left hand side of the PDE \eqref{eqn:simplified_prob1}, we get,
+\begin{equation}
+\rho(x,y)c(x,y) \parder{T_1 + T_2}{t} (x,y,t) =\rho(x,y)c(x,y)\bigg( \parder{T_1}{t} (x,y,t)+\parder{T_2}{t} (x,y,t)\bigg)
+\label{equ:prob1_1splidL}
+\end{equation}
+Substituting the solution \eqref{eqn:prob1_soln} into the right side of the PDE \eqref{eqn:simplified_prob1},
+\begin{multline}
+\parder{ }{x}\left(\kappa(x,y)\parder{T_1 + T_2}{x} (x,y,t)\right) + \parder{ }{y}\bigg(\kappa(x,y)\parder{T_1 + T_2}{y} (x,y,t)\bigg)+u(x,y,t)=\\ 
+\bigg(\parder{\kappa(x,y)}{x} \Big( \parder{T_1}{x} (x,y,t)+\parder{T_2}{x} (x,y,t)\Big)+ \kappa (\parder{^2  T_1}{x^2}(x,y,t)+\parder{^2}{x^2} T_2(x,y,t))\bigg)+\\ \bigg(\parder{\kappa(x,y)}{y}( \parder{T_1}{y} (x,y,t)+\parder{T_2}{y} (x,y,t))+ \kappa (\parder{^2}{y^2} T_1(x,y,t)+\parder{^2}{y^2} T_2(x,y,t))\bigg)+\\ u(x,y,t)
+\label{equ:prob1_11splidR}
+\end{multline}
+
+According to equation \eqref{equ:prob1_1splidL} and \eqref{equ:prob1_11splidR}, both sides are linear. Therefore this equation is linear.
+
+\subsubsection*{Time-invariant}
+input delayed: $u_d(t)=u(t+\delta)$\\
+\begin{equation}
+\rho (x,y)c(x,y)\frac {\partial T} {\partial t}(x,y,t)-(\frac {\partial \kappa} {\partial x}(x,y) \frac {\partial T} {\partial x}(x,y,t)+\frac {\partial \kappa} {\partial y}(x,y) \frac {\partial T} {\partial y}(x,y,t))=u(x,y,t+\delta)
+\label{equ:prob1_12inpD}
+\end{equation}\\
+output delayed:$T_d(t)=T(t+\delta)$\\
+\begin{equation}
+\rho (x,y)c(x,y)\frac {\partial T} {\partial t}(x,y,t+\delta)-(\frac {\partial \kappa} {\partial x}(x,y) \frac {\partial T} {\partial x}(x,y,t+\delta)+\frac {\partial \kappa} {\partial y}(x,y) \frac {\partial T} {\partial y}(x,y,t+\delta))=u(x,y,t+\delta)
+\label{equ:prob1_12outpD}
+\end{equation}\\
+The right side of equation\eqref{equ:prob1_12inpD} and \eqref{equ:prob1_12outpD} is equal, so it is time-invariant.
+
+\subsection*{Homogeneous}
+\subsubsection*{Linear}
+When $\rho$ and c is constant, it is not associated with substituting the solution \eqref{eqn:prob1_soln} into the both sides of the PDE \eqref{eqn:simplified_prob1}. So this system is still linear.
+
+\subsubsection*{time-invariant}
+Because only u and T is associated with time that no matter the system is homogeneous or not, it is time-invariant. (Proof as equation \eqref{equ:prob1_12inpD} and \eqref{equ:prob1_12outpD})
+
+
+\section*{Problem 2}
+\addcontentsline{toc}{section}{\protect\numberline{}Problem 2}
+Homogeneous model assumption implies the following:
+\begin{itemize}
+	\item $l_x = l_y = 0$.
+	\item $\rho(x,y) = \rho$ $\kappa(x,y) = \kappa$ and $c(x,y) = c$, where $\rho, c, \kappa$ are positive constants.
+\end{itemize}
+Applying the above assumptions to the model gives
+\begin{equation}
+\rho c \parder{T}{t} = \kappa \bigg(\parder{^2 T}{x^2} + \parder{^2 T}{y^2}\bigg) + u(x,y,t),
+\label{eqn:prob2_model}
+\end{equation}
+as the final equation. \\
+Let the source term be zero, i.e., $u(x,y,t) = 0$. Consider the function 
+\begin{equation}
+T(x,y,t) = a(t)\psi(x)\phi(y),
+\label{eqn:prob2_soln}
+\end{equation}
+where $a(t)$, $\psi(x)$ and $\phi(y)$ are real-valued functions on $\mathbb{R}$, $[0,L_x]$ and $[0,L_y]$ respectively. \\
+Substituting \eqref{eqn:prob2_soln} into \eqref{eqn:prob2_model},
+\begin{equation}
+\rho c \parder{\big(a(t)\psi(x)\phi(y)\big)}{t} = \kappa \bigg(\parder{^2 \big(a(t)\psi(x)\phi(y)\big)}{x^2} + \parder{^2 \big(a(t)\psi(x)\phi(y)\big)}{y^2}\bigg).
+\end{equation}
+This gives,   
+\begin{equation}
+\rho c \psi(x) \phi(y) \der{a(t)}{t} = \kappa a(t)\bigg(\phi(y)\der{^2 \psi(x)}{x^2} + \psi(x)\der{^2 \phi(y)}{y^2}\bigg).
+\end{equation}
+Dividing throughout by \eqref{eqn:prob2_soln}, 
+\begin{equation}
+\frac{\rho c}{a(t)} \der{a(t)}{t} = \kappa \bigg(\frac{1}{\psi(x)}\der{^2 \psi(x)}{x^2} + \frac{1}{\phi(y)}\der{^2 \phi(y)}{y^2}\bigg).
+\end{equation}
+Rearranging, gives,
+\begin{equation}
+\frac{\rho c}{a(t)} \der{a(t)}{t} - \kappa \bigg(\frac{1}{\psi(x)}\der{^2 \psi(x)}{x^2} + \frac{1}{\phi(y)}\der{^2 \phi(y)}{y^2}\bigg) = 0.
+\end{equation}
+The three terms in the above equation are functions of the three independent variables $x, y, t$. So, in order for the above equation to be satisfied, each of the term must be constant. Consider a constant $\alpha > 0$. The three terms are then given as
+\begin{equation}
+\frac{\rho c}{a(t)} \der{a(t)}{t} = \alpha, \qquad \frac{1}{\psi(x)}\der{^2 \psi(x)}{x^2} =   \frac{1}{\phi(y)}\der{^2 \phi(y)}{y^2} = \frac{\alpha}{2 \kappa}.
+\end{equation}
+Upon simplifying, the following differential equations are obtained: 
+\begin{subequations}
+\begin{equation}
+\der{a(t)}{t} - \lambda a(t) = 0,
+\label{eqn:prob2_sub1}
+\end{equation}
+\begin{equation}
+\der{^2 \psi(x)}{x^2} - \lambda_x \psi(x) = 0,
+\label{eqn:prob2_sub2}
+\end{equation}
+\begin{equation}
+\der{^2 \phi(y)}{y^2} - \lambda_y \phi(y) = 0,
+\label{eqn:prob2_sub3}
+\end{equation}
+where $\lambda = \frac{\alpha}{\rho c}$, $\lambda_x  = \lambda_y = \frac{\alpha}{2 \kappa}$. \\
+\end{subequations}
+Thus it can be seen that for equation\eqref{eqn:prob2_soln} to be a solution to the PDE \eqref{eqn:prob2_model} when $u(x,y,t) = 0$, $a(t)$, $\psi(x)$ and $\phi(y)$ need to satisfy the equations \eqref{eqn:prob2_sub1}, \eqref{eqn:prob2_sub2} and \eqref{eqn:prob2_sub3} respectively.
+%\begin{figure}[H]
+%\begin{subfigure}{0.48\textwidth}
+%\includegraphics[width=\linewidth]{22_21_ukappa_contour.eps}
+%\end{subfigure}\hspace*{\fill}
+%\begin{subfigure}{0.48\textwidth}
+%\includegraphics[width=\linewidth]{22_21_ukappa_3d.eps}
+%\end{subfigure}
+%
+%\medskip
+%\begin{subfigure}{0.48\textwidth}
+%\includegraphics[width=\linewidth]{42_41_ukappa_contour.eps}
+%\end{subfigure}\hspace*{\fill}
+%\begin{subfigure}{0.48\textwidth}
+%\includegraphics[width=\linewidth]{42_41_ukappa_3d.eps}
+%\end{subfigure}
+%
+%\medskip
+%\begin{subfigure}{0.48\textwidth}
+%\includegraphics[width=\linewidth]{82_81_ukappa_contour.eps}
+%\end{subfigure}\hspace*{\fill}
+%\begin{subfigure}{0.48\textwidth}
+%\includegraphics[width=\linewidth]{82_81_ukappa_3d.eps}
+%\end{subfigure}
+%
+%\caption{Comparison of the numerical (left) and exact (right) solutions for the 2D convection equation using the \textbf{unlimited $\kappa=1/3$ discretization in space}. The contours shown are for values of $c = 10^{-6} + n, \ n=0,\ldots, 9$.}
+%\end{figure}
+
+\section*{Problem 3}
+\addcontentsline{toc}{section}{\protect\numberline{}Problem 3}
+The set of square-integrable functions is given as:
+\begin{equation}
+L_2 = \{f \ : \ \int_\Omega f \mathrm{dx} < \infty\}
+\end{equation}
+\section*{Problem 4}
+\addcontentsline{toc}{section}{\protect\numberline{}Problem 4}
+\bibliography{references} 
+\bibliographystyle{ieeetr}
+\pagebreak
+\appendix
+\end{document}
