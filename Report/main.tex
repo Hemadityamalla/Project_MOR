@@ -69,10 +69,6 @@
 %Use these commands instead of having to type out all of the derivative symbols in a fraction
 \newcommand{\parder}[2]{\frac{\partial #1}{\partial #2}} 
 \newcommand{\der}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
-%Use these commands while using norms and innerproducts
-\let\norm\undefined %This line removes the definition of norm in the amsmath package since I have my own definition below
-\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
-\newcommand{\dotprod}[2]{\left\langle #1, #2 \right\rangle}
 
 
  
@@ -95,18 +91,7 @@ Hemaditya Malla, 1282484
 \maketitle
 \tableofcontents
 \pagebreak
-\section*{Introduction}
-\TODO{Write the intro later- define the physical parameters, domain}
-
-\begin{equation}
- \begin{cases}
-    \rho(x,y)c(x,y)\parder{T}{t}(x,y,t) = \begin{bmatrix}\parder{ }{x} & \parder{ }{y}\end{bmatrix}K(x,y)\begin{bmatrix}\parder{T(x,y,t)}{x} \\ \parder{T(x,y,t)}{y}\end{bmatrix} + u(x,y,t) \quad (0, T] \times \Omega, \\
-    \parder{T(0,y,t)}{x} = \parder{L_x,y,t}{x} = 0, \quad y\in[0,L_y] \times [0,T],   \\
-    \parder{T(x,0,t)}{y} = \parder{x,L_y,t}{y} = 0, \quad x\in[0,L_x] \times [0,T],   \\
-    T(x,y,0) = T_0(x,y), \quad \{t = 0\} \times \Omega,
-\end{cases}
-\end{equation}
-where $\Omega := [0,L_x] \times [0,L_y]$ and $T_0(x,y)$ is a physically realistic initial temperature profile.
+\TODO{Shall we give a small introduction to the problem where we write down the equations, boundary conditions and also add the figure?}
 \section*{Problem 1}
 \addcontentsline{toc}{section}{\protect\numberline{}Problem 1}
 
@@ -262,66 +247,105 @@ Thus it can be seen that for equation\eqref{eqn:prob2_soln} to be a solution to 
 
 \section*{Problem 3}
 \addcontentsline{toc}{section}{\protect\numberline{}Problem 3}
-The space of square-integrable functions in $\Omega$ is defined as 
+The set of square-integrable functions is given as:
 \begin{equation}
-L_2(\Omega) = \left\{ f(x,y):\Omega\rightarrow\mathbb{R} \ \bigg| \ \int_0^{L_y}\int_0^{L_x} f(x,y)^2 \mathrm{d}x\mathrm{d}y < \infty \right\}
-\label{eqn:l2space}
+L_2 = \{f \ : \ \int_\Omega f \mathrm{dx} < \infty\}
 \end{equation}
-The inner product for $L_2(\Omega)$ is defined as follows:
 \begin{equation}
-\dotprod{f}{g} := \int_0^{L_y}\int_0^{L_x} f(x,y)g(x,y) \mathrm{d}x\mathrm{d}y, \qquad f,g \in L_2(\Omega).
-\label{eqn:l2_innerprod}
+\phi_{k,l}=\psi_k(x)\phi_l(y)
 \end{equation}
-The norm associated with $L_2(\Omega)$ is defined as follows:
+According to question,
 \begin{equation}
-\norm{f}_{L_2} = \dotprod{f}{f}^{\frac{1}{2}}, \qquad f \in L_2(\Omega).
-\label{eqn:l2_norm}
+\left<\phi_{k,l},\phi_{i,j}\right>:=\int_{0}^{L_x} \int_{0}^{L_y}\psi_k(x)\phi_l(y)\psi_i(x)\phi_j(y)dydx
 \end{equation}
+
+\subsection*{k=0,l=0;i=0,j=0}
+\begin{equation}
+\left<\phi_{k,l},\phi_{i,j}\right>=\int_{0}^{L_x} \int_{0}^{L_y}\psi_k(x)\phi_l(y)\psi_i(x)\phi_j(y)dydx=\int_{0}^{L_x} \int_{0}^{L_y} \frac{1}{L_x} \frac{1}{L_y}dydx=1
+\end{equation}
+%%---------------------------
+\subsection*{k=0,l=0;i=0,j>0}
+\begin{equation}
+\left<\phi_{k,l},\phi_{i,j}\right>=\int_{0}^{L_x} \int_{0}^{L_y} \frac{1}{L_x}\frac{\sqrt{2}}{L_y}\cos(\frac{j \pi y}{L_y})dydx=\left.\left.\frac{x}{L_x}\frac{\sqrt{2}}{j \pi}\sin(\frac{j \pi y}{L_y})\right|_{0}^{L_y} \right|_{0}^{L_x}=0
+\label{eqn:prob3_30_41}
+\end{equation}
+
+\subsection*{k=0,l=0;i>0,j=0}
+\begin{equation}
+\left<\phi_{k,l},\phi_{i,j}\right>=\int_{0}^{L_x} \int_{0}^{L_y} \frac{\sqrt{2}}{L_x}\cos(\frac{i \pi x}{L_x})\frac{1}{L_y}dydx=\left.\left.\frac{\sqrt{2}}{i \pi}\sin(\frac{i \pi x}{L_x})\frac{y}{L_y} \right|_{0}^{L_y} \right|_{0}^{L_x}=0
+\label{eqn:prob3_31_40}
+\end{equation}
+
+\subsection*{k=0,l>0;i=0,j=0}
+Analogous to equation \eqref{eqn:prob3_30_41}
+\subsection*{k>0,l=0;i=0,j=0}
+Analogous to equation \eqref{eqn:prob3_31_40}
+%%--------------------------------
+\subsection*{k=0,l=0;i>0,j>0}
+\begin{equation}
+\left<\phi_{k,l},\phi_{i,j}\right>=\int_{0}^{L_x} \int_{0}^{L_y} \frac{\sqrt{2}}{L_x}\cos(\frac{i \pi x}{L_x})\frac{\sqrt{2}}{L_y}\cos(\frac{j \pi y}{L_y})dydx=\left.\left.\frac{\sqrt{2}}{i \pi}\sin(\frac{i \pi x}{L_x})\frac{\sqrt{2}}{j \pi}\sin(\frac{j \pi y}{L_y})\right|_{0}^{L_y} \right|_{0}^{L_x}=0
+\label{eqn:prob3_31_41}
+\end{equation}
+\subsection*{k>0,l>0;i=0,j=0}
+Analogous to equation \eqref{eqn:prob3_31_41}
+\subsection*{k>0,l=0;i>0,j=0}
+\begin{multline}
+\left<\phi_{k,l},\phi_{i,j}\right>=\int_{0}^{L_x} \int_{0}^{L_x} \frac{2}{L_x}\cos(\frac{k \pi x}{L_x})\cos(\frac{i \pi x}{L_x})\frac{1}{L_y}dydx\\
+=\left\{\begin{array}{rcl}
+\left.\left.\left(\frac{1}{2k \pi}\sin(\frac{2k  \pi x}{L_x})+ \frac{x}{L_x} \right)\frac{y}{L_y}\right|_{0}^{L_y} \right|_{0}^{L_x}=1 & & {k=i}\\
+\left.\left.\left(\frac{1}{(k+i) \pi}\sin(\frac{(k+i) \pi x}{L_y})+\frac{1}{(k-i) \pi}\sin(\frac{(k-i) \pi x}{L_x})\right)\frac{y}{L_y}\right|_{0}^{L_y} \right|_{0}^{L_x} =0 & & {k \neq i}
+\end{array}\right.
+\label{eqn:prob3_32_40}
+\end{multline}
+\subsection*{k>0,l=0;i=0,j>0}
+Analogous to equation \eqref{eqn:prob3_31_41}
+\subsection*{k=0,l>0;i>0,j=0}
+Analogous to equation \eqref{eqn:prob3_31_41}
+\subsection*{k=0,l>0;i=0,j>0}
+\begin{multline}
+\left<\phi_{k,l},\phi_{i,j}\right>=\int_{0}^{L_x} \int_{0}^{L_y} \frac{1}{L_x}\frac{2}{L_y}\cos(\frac{l \pi y}{L_y})\cos(\frac{j \pi y}{L_y})dydx \\
+=\left\{\begin{array}{rcl}
+\left.\left.\frac{x}{L_x}\left(\frac{1}{2l \pi}\sin(\frac{2l  \pi y}{L_y})+ \frac{y}{L_y} \right)\right|_{0}^{L_y} \right|_{0}^{L_x}=1 & & {l=j}\\
+\left.\left.\frac{x}{L_x}\left(\frac{1}{(l+j) \pi}\sin(\frac{(l+j) \pi y}{L_y})+\frac{1}{(l-j) \pi}\sin(\frac{(l-j) \pi y}{L_y})\right)\right|_{0}^{L_y} \right|_{0}^{L_x} =0 & & {l \neq j}
+\end{array}\right.
+%0& \text{l \neq j}
+%\end{cases}
+\label{eqn:prob3_30_42}
+\end{multline}
+%%-------------------------------
+\subsection*{k=0,l>0;i>0,j>0}
+\begin{equation}
+\left<\phi_{k,l},\phi_{i,j}\right>=\int_{0}^{L_x} \int_{0}^{L_y} \frac{\sqrt{2}}{L_x}\cos(\frac{i \pi x}{L_x}) 
+\frac{2}{L_y}\cos(\frac{l \pi y}{L_y})\cos(\frac{j \pi y}{L_y})dydx =0
+\label{eqn:prob3_31_42}
+\end{equation}
+
+\subsection*{k>0,l=0;i>0,j>0}
+\begin{equation}
+\left<\phi_{k,l},\phi_{i,j}\right>=\int_{0}^{L_x} \int_{0}^{L_x} \frac{2}{L_x}\cos(\frac{k \pi x}{L_x})\cos(\frac{i \pi x}{L_x})\frac{\sqrt{2}}{j \pi}\sin(\frac{j \pi y}{L_y})
+dydx=0
+\label{eqn:prob3_32_41}
+\end{equation}
+
+\subsection*{k>0,l>0;i=0,j>0}
+Analogous to equation \eqref{eqn:prob3_31_42}
+\subsection*{k>0,l>0;i>0,j=0}
+Analogous to equation \eqref{eqn:prob3_32_41}
+%%--------------------------------------
+\subsection*{k>0,l>0;i>0,j>0}
+\begin{multline}
+\left<\phi_{k,l},\phi_{i,j}\right>=\int_{0}^{L_x} \int_{0}^{L_y} \frac{2}{L_x}\cos(\frac{k \pi x}{L_x})\cos(\frac{i \pi x}{L_x}) \frac{2}{L_y}\cos(\frac{l \pi y}{L_y})\cos(\frac{j \pi y}{L_y})dydx \\
+=\left\{\begin{array}{rcl}
+\left.\left.\left(\frac{1}{2k \pi}\sin(\frac{2k  \pi x}{L_y})+ \frac{x}{L_x} \right) \left(\frac{1}{2l \pi}\sin(\frac{2l  \pi y}{L_y})+ \frac{y}{L_y} \right)\right|_{0}^{L_y} \right|_{0}^{L_x}=1 & & {k=i \land l=j}\\
+0 & & {otherwise}
+\end{array}\right.
+\label{eqn:prob3_32_42}
+\end{multline}
+
+
+
 \section*{Problem 4}
 \addcontentsline{toc}{section}{\protect\numberline{}Problem 4}
-The spectral expansion of $T(x,y,t)$ is given as
-\begin{equation}
-T(x,y,t) = \sum_{k=0}^\infty\sum_{l=0}^\infty a_{kl}(t)\psi_k(x)\phi_l(y).
-\end{equation}
-Taking $u(x,y,t) = 0$ and substituting the above solution in equation \eqref{eqn:prob2_model}, the following is obtained:
-\begin{equation}
-\rho c\ parder{ }{t} \left(\sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t)\psi_k(x)\phi_l(y)\right) = \kappa \left(\parder{^2}{x^2} + \parder{^2}{y^2}\right)\sum_{k=0}^\infty\sum_{l=0}^\infty a_{kl}(t)\psi_k(x)\phi_l(y).
-\end{equation}
-The partial derivatives can be written as regular(\HM{?}) derivatives as they are now operating on functions of a single variable.
-\begin{equation}
-\Rightarrow \rho c \sum_{k=0}^\infty\sum_{l=0}^\infty \der{a_{k,l}(t)}{t} \psi_k(x)\phi_l(y) = \kappa \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\der{^2 \psi_{k}(x)}{x^2}\phi_l(y) + \psi_k(x)\der{^2\phi_l(y)}{y^2}\right)
-\end{equation}
-\textbf{Remark:} It has been made clear that $\psi = \psi(x)$ and $\phi = \phi(y)$, so $(x) \& (y)$ are dropped henceforth.\\
-The function $\psi_i(x)\phi_j(y)$ (where $i,j$ can be any of $\{0,1,\ldots,\infty\}$) is multiplied throughout and the equation is integrated over the whole domain $\Omega$ as follows:
-\begin{multline}
-\rho c \int_{0}^{L_y}\int_0^{L_x}\sum_{k=0}^\infty\sum_{l=0}^\infty \der{a_{k,l}(t)}{t} \psi_k(x)\phi_l(y) \psi_i(x)\phi_j(y) = \\ \kappa \int_{0}^{L_y}\int_0^{L_x} \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\der{^2 \psi_{k}(x)}{x^2}\phi_l(y)\psi_i(x)\phi_j(y) + \psi_k(x)\der{^2\phi_l(y)}{y^2}\psi_i(x)\phi_j(y)\right).
-\end{multline}
-Re-writing the above equation using the inner product notation \eqref{eqn:l2_innerprod}, we get, 
-\begin{multline}
-\rho c \sum_{k=0}^\infty\sum_{l=0}^\infty \der{a_{k,l}(t)}{t} \dotprod{\psi_k(x)\phi_l(y)}{\psi_i(x)\phi_j(y)} = \\ \kappa \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\dotprod{\der{^2 \psi_{k}(x)}{x^2}\phi_l(y)}{\psi_i(x)\phi_j(y)} + \dotprod{\psi_k(x)\der{^2\phi_l(y)}{y^2}}{\psi_i(x)\phi_j(y)}\right).
-\label{eqn:galerkin_deriv3}
-\end{multline}
-Since $\phi_k(x)$ and $\psi_l(y)$ are trigonometric functions, their derivatives w.r.t.\ $x$ and $y$ respectively give:
-\begin{equation}
-\der{^2 \psi_k(x)}{x^2} = -\left(\frac{k\pi}{L_x}\right)^2 \psi_k(x), \qquad \der{^2 \phi_l(y)}{y^2} = -\left(\frac{l\pi}{L_y}\right)^2.
-\end{equation}
-Using the above results in \eqref{eqn:galerkin_deriv3}, the following is obtained:
-\begin{multline}
-\rho c \sum_{k=0}^\infty\sum_{l=0}^\infty \der{a_{k,l}(t)}{t} \dotprod{\psi_k(x)\phi_l(y)}{\psi_i(x)\phi_j(y)} = \\ -\kappa \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left(\left(\frac{k\pi}{L_x}\right)^2\dotprod{\psi_k(x)\phi_l(y)}{\psi_i(x)\phi_j(y)} + \left(\frac{l\pi}{L_y}\right)^2\dotprod{\psi_k(x)\phi_l(y)}{\psi_i(x)\phi_j(y)}\right).
-\label{eqn:galerkin_deriv4}
-\end{multline}
-Using the orthonormality result \HM{Give ref here} from the previous problem, the following is obtained:
-\begin{equation}
-\rho c \sum_{k=0}^\infty\sum_{l=0}^\infty \der{a_{k,l}(t)}{t} \delta_{ki}\delta_{lj} = \\ -\kappa \sum_{k=0}^\infty\sum_{l=0}^\infty a_{k,l}(t) \left[\left(\frac{k\pi}{L_x}\right)^2\delta_{ki}\delta_{lj} + \left(\frac{l\pi}{L_y}\right)^2\delta_{ki}\delta_{lj}\right].
-\label{eqn:galerkin_deriv5}
-\end{equation}
-Setting $k = i$ and $l = j$ in the equation \eqref{eqn:galerkin_deriv5} and neglecting the zero terms, we get,
-\begin{equation}
-\rho c \der{a_{k,l}(t)}{t}  = -\kappa a_{k,l}(t)\left[\left(\frac{k\pi}{L_x}\right)^2 + \left(\frac{l\pi}{L_y}\right)^2\right], \qquad k,l = 0,1,\ldots,\infty.
-\label{eqn:galerkin_deriv6}
-\end{equation}
-It can be observed that the above set of equations are infinite, so the values of $k,l$ are restricted to finite values. \\
-Let $k = 0,1,\ldots,K$ and $l = 0,1,\ldots,L$. Then a set of $KL$ equations are obtained that have the form \eqref{eqn:galerkin_deriv6}.
 \bibliography{references} 
 \bibliographystyle{ieeetr}
 \pagebreak
